@@ -101,6 +101,9 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     private transient float sleepTime;
     private transient boolean initialized;
 
+    public transient boolean indestructible = false;
+    public transient Team lastHit;
+
     /** Sets this tile entity data to this and adds it if necessary. */
     public Building init(Tile tile, Team team, boolean shouldAdd, int rotation){
         if(!initialized){
@@ -1596,7 +1599,7 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
      * @return whether the bullet should be removed. */
     public boolean collision(Bullet other){
         boolean wasDead = health <= 0;
-
+        lastHit = other.team;
         float damage = other.damage() * other.type().buildingDamageMultiplier;
         if(!other.type.pierceArmor){
             damage = Damage.applyArmor(damage, block.armor);
@@ -1850,7 +1853,7 @@ abstract class BuildingComp implements Posc, Teamc, Healthc, Buildingc, Timerc, 
     @Replace
     @Override
     public void damage(float damage){
-        if(dead()) return;
+        if(dead() || indestructible) return;
 
         float dm = state.rules.blockHealth(team);
         lastDamageTime = Time.time;

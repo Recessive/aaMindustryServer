@@ -699,4 +699,12 @@ public class EventType{
             this.action = action;
         }
     }
+
+    public static class PlayerSpawn{
+        public final Player player;
+
+        public PlayerSpawn(Player player){
+            this.player = player;
+        }
+    }
 }

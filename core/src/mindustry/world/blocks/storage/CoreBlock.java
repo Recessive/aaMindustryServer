@@ -84,6 +84,8 @@ public class CoreBlock extends StorageBlock{
         if(state.isCampaign() && player == Vars.player){
             block.unitType.unlock();
         }
+
+        Events.fire(new EventType.PlayerSpawn(player));
     }
 
     @Override
