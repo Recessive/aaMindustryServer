@@ -32,7 +32,7 @@ jobs:
       if: ${{ github.repository == 'Recessive/aaMindustryServer' }}
       run: |
         cd ../
-        cp -r ./Mindustry ./MindustryJitpack
+        cp -r ./aaMindustryServer ./MindustryJitpack
         cd MindustryJitpack
         git clone --depth 1 https://github.com/Recessive/aaMindustryServerJitpack.git
         rm -rf .git
@@ -43,6 +43,6 @@ jobs:
         git add .
         git commit --allow-empty -m "${GITHUB_SHA}"
         git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/Recessive/aaMindustryServerJitpack
-        cd ../Mindustry
+        cd ../aaMindustryServer
     - name: Run unit tests
       run: ./gradlew clean cleanTest test --stacktrace
