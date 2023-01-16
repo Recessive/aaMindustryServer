@@ -28,21 +28,5 @@ jobs:
           git commit -m "Automatic bundle update"
           git push
         fi
-    - name: Update JITpack repo
-      if: ${{ github.repository == 'Recessive/aaMindustryServer' }}
-      run: |
-        cd ../
-        cp -r ./aaMindustryServer ./MindustryJitpack
-        cd MindustryJitpack
-        git clone --depth 1 https://github.com/Recessive/aaMindustryServerJitpack.git
-        rm -rf .git
-        cp -r ./MindustryJitpack/.git ./.git
-        rm -rf MindustryJitpack
-        rm -rf .github
-        rm README.md
-        git add .
-        git commit --allow-empty -m "${GITHUB_SHA}"
-        git push https://Anuken:${{ secrets.API_TOKEN_GITHUB }}@github.com/Recessive/aaMindustryServerJitpack
-        cd ../aaMindustryServer
     - name: Run unit tests
       run: ./gradlew clean cleanTest test --stacktrace
